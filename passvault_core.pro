@@ -60,3 +60,10 @@ DISTFILES += \
 
 RESOURCES += \
     ssl_certificate.qrc
+
+unix:!macx: LIBS += -L$$PWD/../../../../../../opt/openssl/openssl-1.1.1c_install/lib/ -lcrypto
+
+INCLUDEPATH += $$PWD/../../../../../../opt/openssl/openssl-1.1.1c_install/include
+DEPENDPATH += $$PWD/../../../../../../opt/openssl/openssl-1.1.1c_install/include
+
+unix:!macx: PRE_TARGETDEPS += $$PWD/../../../../../../opt/openssl/openssl-1.1.1c_install/lib/libcrypto.a

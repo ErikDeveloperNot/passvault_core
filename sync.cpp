@@ -84,6 +84,10 @@ void Sync::doPost(BaseRequestMessage * job)
     connect(reply, &QIODevice::readyRead, [&]() {
         qDebug() << "Data Recived: " << reply->size();
         buffer->append(reply->readAll());
+qDebug() << "s:\n" << *buffer;
+QJsonParseError error;
+QJsonDocument::fromJson(*buffer, &error);
+qDebug() << error.errorString() << ", offset: " << error.offset;
 
     });
 
@@ -95,6 +99,11 @@ void Sync::doPost(BaseRequestMessage * job)
                emit resultReady(new ResponseMessage{err, type});
            } else {
                qDebug() << "Calling emit";
+ qDebug() << *buffer;
+ QJsonParseError error;
+ QJsonDocument::fromJson(*buffer, &error);
+ qDebug() << error.errorString() << ", offset: " << error.offset;
+
                emit resultReady(new ResponseMessage{QJsonDocument::fromJson(*buffer), type});
            }
            reply->deleteLater();

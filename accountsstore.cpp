@@ -656,6 +656,12 @@ void AccountsStore::createSyncCallBacks(Sync *sync)
     connect(sync, &Sync::resultReady, [&](const ResponseMessage *resp) {
         if (resp->error) {
             qDebug() << "Error from Sync: " << resp->errorString;
+
+            if (resp->type == RequestType::Delete) {
+                this->removeSyncServer();
+                this->saveSettings();
+            }
+
             emit readyMessage("Sync Server Error: " + resp->errorString);
         } else if (resp->type == RequestType::Register || resp->type == RequestType::Config) {
             qDebug() << "Result from sync: \n" << resp->doc ;
@@ -693,7 +699,9 @@ void AccountsStore::createSyncCallBacks(Sync *sync)
                 } else {
                     //if existing sentback account is deleted remove it from the store
                     if (a.deleted) {
+                        Account *to_del = accountsMap[a.accountName];
                         accountsMap.remove(a.accountName);
+                       delete to_del;
                     } else {
                         Account *acct = accountsMap[a.accountName];
                         acct->setUserName(a.userName);
@@ -712,9 +720,6 @@ void AccountsStore::createSyncCallBacks(Sync *sync)
             // save store at halfway point in case the next call fails
             this->sortAccounts();
             this->saveAccounts();
-
-            // update store before sending back to the server
-            // blah blah
 
 
             // accounts to send back to server
