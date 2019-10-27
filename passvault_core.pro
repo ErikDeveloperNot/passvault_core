@@ -56,10 +56,9 @@ DEPENDPATH += $$PWD/../../../../../../opt/openssl/openssl-1.1.1c_install/include
 macx: PRE_TARGETDEPS += $$PWD/../../../../../../opt/openssl/openssl-1.1.1c_install/lib/libcrypto.a
 
 DISTFILES += \
-    cert.pem
+    cert-old.pem
 
-RESOURCES += \
-    ssl_certificate.qrc
+RESOURCES +=
 
 unix:!macx: LIBS += -L$$PWD/../../../../../../opt/openssl/openssl-1.1.1c_install/lib/ -lcrypto
 

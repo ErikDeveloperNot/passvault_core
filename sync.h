@@ -39,7 +39,7 @@ struct RegisterRequestMessage : public BaseRequestMessage
 
     RegisterRequestMessage(QString email, QString password) {
         type = Register;
-        url = "https://ec2-13-56-39-109.us-west-1.compute.amazonaws.com:8443/PassvaultServiceRegistration/service/registerV1/sync-server";
+        url = "https://passvault.erikdevelopernot.net:8443/PassvaultServiceRegistration/service/registerV1/sync-server";
 
         QJsonObject root{};
         root.insert("email", QJsonValue{email});
@@ -57,7 +57,7 @@ struct ConfigRequestMessage : public BaseRequestMessage
 
     ConfigRequestMessage(QString email, QString password) {
         type = Config;
-        url = "https://ec2-13-56-39-109.us-west-1.compute.amazonaws.com:8443/PassvaultServiceRegistration/service/registerV1/sync-server";
+        url = "https://passvault.erikdevelopernot.net:8443/PassvaultServiceRegistration/service/registerV1/sync-server";
         this->email = email;
         this->password = password;
     }
@@ -67,7 +67,7 @@ struct DeleteRequestMessage : public BaseRequestMessage
 {
     DeleteRequestMessage(QString email, QString password) {
         type = Delete;
-        url = "https://ec2-13-56-39-109.us-west-1.compute.amazonaws.com:8443/PassvaultServiceRegistration/service/deleteAccount/sync-server";
+        url = "https://passvault.erikdevelopernot.net:8443/PassvaultServiceRegistration/service/deleteAccount/sync-server";
         QJsonObject root{};
         root.insert("user", QJsonValue{email});
         root.insert("password", QJsonValue{password});
@@ -80,7 +80,7 @@ struct SyncInitialRequestMessage : public BaseRequestMessage
 {
     SyncInitialRequestMessage(QString email, QString password, const QVector<Account *> &accounts) {
         type = Sync_Initial;
-        url = "https://ec2-13-56-39-109.us-west-1.compute.amazonaws.com:8443/PassvaultServiceRegistration/service/sync-accounts/sync-initial";
+        url = "https://passvault.erikdevelopernot.net:8443/PassvaultServiceRegistration/service/sync-accounts/sync-initial";
         QJsonObject root{};
         root["user"] = email;
         root["password"] = password;
@@ -147,7 +147,7 @@ struct SyncFinalRequestMessage : public BaseRequestMessage
     SyncFinalRequestMessage(QString user, QString password, double lockTime, std::vector<SyncAccount> accounts)
     {
         type = RequestType::Sync_Final;
-        url = "https://ec2-13-56-39-109.us-west-1.compute.amazonaws.com:8443/PassvaultServiceRegistration/service/sync-accounts/sync-final";
+        url = "https://passvault.erikdevelopernot.net:8443/PassvaultServiceRegistration/service/sync-accounts/sync-final";
         QJsonObject root{};
         root["user"] = user;
         root["password"] = password;
